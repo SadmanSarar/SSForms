@@ -3,7 +3,7 @@
     <item>
         <layer-list>
             <item>
-                <formColor android:formColor="@android:formColor/white"/>
+                <color android:color="@android:color/white"/>
             </item>
             <item>
                 <bitmap

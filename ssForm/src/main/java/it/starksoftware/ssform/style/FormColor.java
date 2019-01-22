@@ -24,24 +24,24 @@ public class FormColor {
 	}
 	
 	public static FormColor fromHex(String hex) {
-		FormColor formColor = new FormColor();
-		formColor.hexString = hex;
-		formColor.mType = Type.HEX;
-		return formColor;
+		FormColor color = new FormColor();
+		color.hexString = hex;
+		color.mType = Type.HEX;
+		return color;
 	}
 	
 	public static FormColor fromInt(@ColorInt int colorInt) {
-		FormColor formColor = new FormColor();
-		formColor.color = colorInt;
-		formColor.mType = Type.INT;
-		return formColor;
+		FormColor color = new FormColor();
+		color.color = colorInt;
+		color.mType = Type.INT;
+		return color;
 	}
 	
 	public static FormColor fromRes(@ColorRes int colorRes) {
-		FormColor formColor = new FormColor();
-		formColor.resColor = colorRes;
-		formColor.mType = Type.RES;
-		return formColor;
+		FormColor color = new FormColor();
+		color.resColor = colorRes;
+		color.mType = Type.RES;
+		return color;
 	}
 	
 	public int getColor(Context context) {

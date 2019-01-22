@@ -28,7 +28,7 @@
         android:layout_height="100dp"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        app:ef_matProg_barColor="@formColor/ef_teal"
+        app:ef_matProg_barColor="@color/ef_teal"
         app:ef_matProg_progressIndeterminate="true"/>
 
     <android.support.v7.widget.RecyclerView
@@ -43,6 +43,6 @@
         android:layout_height="56dp"
         android:layout_alignBottom="@+id/recyclerView"
         android:layout_alignParentBottom="true"
-        android:background="@formColor/ef_black_alpha_aa"/>
+        android:background="@color/ef_black_alpha_aa"/>
 
 </RelativeLayout>

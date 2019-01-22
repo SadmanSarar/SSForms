@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements
 						FormContainerStyle.createInstance()
 								.setBackGround(
 										Background.fromColor(
-												FormColor.fromHex("#0000ff")
+												FormColor.fromHex("#2e2e2e")
 										)
 								)
 				)

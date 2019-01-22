@@ -35,9 +35,9 @@ public class Background {
 		return background;
 	}
 	
-	public static Background fromColor(FormColor formColor) {
+	public static Background fromColor(FormColor color) {
 		Background background = new Background();
-		background.mFormColor = formColor;
+		background.mFormColor = color;
 		background.mType = Type.COLOR;
 		return background;
 	}

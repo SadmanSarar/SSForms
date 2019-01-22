@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@formColor/colorFormMasterElementBackground"
+    android:background="@color/colorFormMasterElementBackground"
     android:layout_width="match_parent"
     android:id="@+id/itemContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,7 +22,7 @@
             android:layout_marginTop="10sp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/no_image_profile"
-            app:strokeColor="@formColor/colorAccent"
+            app:strokeColor="@color/colorAccent"
             app:strokeWidth="2px" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -33,7 +33,7 @@
             android:layout_marginTop="10sp"
             android:fontFamily="sans-serif-thin"
             android:gravity="center_vertical"
-            android:textColor="@formColor/colorFormMasterElementTextTitle"
+            android:textColor="@color/colorFormMasterElementTextTitle"
             android:textSize="18sp"
             android:textAlignment="center"
             android:textStyle="bold"
@@ -47,6 +47,6 @@
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="2dp"
-        android:background="@formColor/colorFormMasterDivider" />
+        android:background="@color/colorFormMasterDivider" />
 
 </LinearLayout>

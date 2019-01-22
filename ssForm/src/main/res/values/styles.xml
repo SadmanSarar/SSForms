@@ -12,9 +12,9 @@
     </style>
 
     <style name="AppTheme" parent="ef_BaseTheme">
-        <item name="colorPrimary">@formColor/colorPrimary</item>
-        <item name="colorPrimaryDark">@formColor/colorPrimaryDark</item>
-        <item name="colorAccent">@formColor/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="spinnerStyle">@style/Widget.App.Spinner</item>
         <item name="android:spinnerStyle">@style/Widget.App.Spinner</item>
     </style>
@@ -32,14 +32,14 @@
 
 
     <style name="ef_AppTheme" parent="ef_BaseTheme">
-        <item name="colorPrimary">@formColor/colorPrimary</item>
-        <item name="colorPrimaryDark">@formColor/colorPrimaryDark</item>
-        <item name="colorAccent">@formColor/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="ef_CustomToolbarTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">@formColor/ef_colorTextPrimary</item>
-        <item name="actionMenuTextColor">@formColor/ef_colorTextPrimary</item>
+        <item name="android:textColorPrimary">@color/ef_colorTextPrimary</item>
+        <item name="actionMenuTextColor">@color/ef_colorTextPrimary</item>
     </style>
 
     <style name="Widget.App.Spinner" parent="@style/Widget.AppCompat.Spinner">

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="5sp"
     android:id="@+id/itemContainer"
-    android:background="@formColor/colorFormMasterElementBackground"
+    android:background="@color/colorFormMasterElementBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="2dp"
-        android:background="@formColor/colorFormMasterDivider" />
+        android:background="@color/colorFormMasterDivider" />
     </LinearLayout>
 
 </LinearLayout>
