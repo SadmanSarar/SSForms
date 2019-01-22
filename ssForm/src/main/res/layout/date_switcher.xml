@@ -9,7 +9,7 @@
         android:id="@+id/btnPrevious"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/float_transparent"
+        android:background="@formColor/float_transparent"
         android:layout_weight="1"
         android:src="@drawable/ic_chevron_left_green_700_24dp"
         android:text="Previous" />
@@ -27,7 +27,7 @@
     <ImageButton
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
-        android:background="@color/float_transparent"
+        android:background="@formColor/float_transparent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:src="@drawable/ic_chevron_right_green_700_24dp"

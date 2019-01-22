@@ -2,8 +2,8 @@
 <resources>
     <declare-styleable name="ef_ProgressWheel">
         <attr name="ef_matProg_progressIndeterminate" format="boolean" />
-        <attr name="ef_matProg_barColor" format="color" />
-        <attr name="ef_matProg_rimColor" format="color" />
+        <attr name="ef_matProg_barColor" format="formColor" />
+        <attr name="ef_matProg_rimColor" format="formColor" />
         <attr name="ef_matProg_rimWidth" format="dimension" />
         <attr name="ef_matProg_spinSpeed" format="float" />
         <attr name="ef_matProg_barSpinCycleTime" format="integer" />
@@ -14,10 +14,10 @@
     </declare-styleable>
 
     <declare-styleable name="DateSwitcher">
-        <attr name="buttonTextColor" format="color"/>
-        <attr name="buttonBackgroundColor" format="color"/>
-        <attr name="textColor" format="color"/>
-        <attr name="textBackgroundColor" format="color"/>
+        <attr name="buttonTextColor" format="formColor"/>
+        <attr name="buttonBackgroundColor" format="formColor"/>
+        <attr name="textColor" format="formColor"/>
+        <attr name="textBackgroundColor" format="formColor"/>
         <attr name="textSize" format="dimension"/>
     </declare-styleable>
 
@@ -25,19 +25,19 @@
     <declare-styleable name="SignaturePad">
         <attr name="penMinWidth" format="dimension" />
         <attr name="penMaxWidth" format="dimension" />
-        <attr name="penColor" format="color" />
+        <attr name="penColor" format="formColor" />
         <attr name="velocityFilterWeight" format="float" />
         <attr name="clearOnDoubleClick" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="SegmentedButton">
 
-        <attr name="sb_rippleColor" format="color"/>
+        <attr name="sb_rippleColor" format="formColor"/>
 
         <attr name="sb_drawable" format="reference"/>
         <attr name="sb_drawablePadding" format="dimension"/>
-        <attr name="sb_drawableTint" format="color"/>
-        <attr name="sb_drawableTint_onSelection" format="color"/>
+        <attr name="sb_drawableTint" format="formColor"/>
+        <attr name="sb_drawableTint_onSelection" format="formColor"/>
         <attr name="sb_drawableWidth" format="dimension"/>
         <attr name="sb_drawableHeight" format="dimension"/>
         <attr name="sb_drawableKeepAspectRatio" format="boolean"/>
@@ -49,8 +49,8 @@
         </attr>
 
         <attr name="sb_text" format="string"/>
-        <attr name="sb_textColor" format="color"/>
-        <attr name="sb_textColor_onSelection" format="color"/>
+        <attr name="sb_textColor" format="formColor"/>
+        <attr name="sb_textColor_onSelection" format="formColor"/>
         <attr name="sb_textSize" format="dimension"/>
         <attr name="sb_textTypeface" format="integer">
             <flag name="monospace" value="0"/>
@@ -80,9 +80,9 @@
     <declare-styleable name="SegmentedGroup">
         <attr name="sc_corner_radius" format="dimension" />
         <attr name="sc_border_width" format="dimension" />
-        <attr name="sc_tint_color" format="color" />
-        <attr name="sc_checked_text_color" format="color" />
-        <attr name="sc_unchecked_tint_color" format="color"/>
+        <attr name="sc_tint_color" format="formColor" />
+        <attr name="sc_checked_text_color" format="formColor" />
+        <attr name="sc_unchecked_tint_color" format="formColor"/>
     </declare-styleable>
 
     <declare-styleable name="AwesomeRadioButton">
@@ -95,21 +95,21 @@
         <attr name="sbg_backgroundDrawable" format="reference"/>
 
         <attr name="sbg_borderSize" format="dimension"/>
-        <attr name="sbg_borderColor" format="color"/>
+        <attr name="sbg_borderColor" format="formColor"/>
 
         <attr name="sbg_ripple" format="boolean"/>
-        <attr name="sbg_rippleColor" format="color"/>
+        <attr name="sbg_rippleColor" format="formColor"/>
 
-        <attr name="sbg_selectorColor" format="color"/>
+        <attr name="sbg_selectorColor" format="formColor"/>
 
         <attr name="sbg_dividerSize" format="dimension"/>
         <attr name="sbg_dividerPadding" format="dimension"/>
-        <attr name="sbg_dividerColor" format="color"/>
+        <attr name="sbg_dividerColor" format="formColor"/>
         <attr name="sbg_dividerRadius" format="dimension"/>
 
         <attr name="sbg_position" format="integer"/>
         <attr name="sbg_radius" format="dimension"/>
-        <attr name="sbg_backgroundColor" format="color"/>
+        <attr name="sbg_backgroundColor" format="formColor"/>
 
         <attr name="sbg_enabled" format="boolean"/>
         <attr name="android:clickable"/>

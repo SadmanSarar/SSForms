@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/ef_black_alpha_50"
+        android:background="@formColor/ef_black_alpha_50"
         android:orientation="vertical"
         android:padding="@dimen/ef_padding_small">
 
@@ -28,7 +28,7 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="3"
-            android:textColor="@color/ef_white"
+            android:textColor="@formColor/ef_white"
             android:textSize="@dimen/ef_font_small"/>
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:textColor="@color/ef_grey"
+            android:textColor="@formColor/ef_grey"
             android:textSize="@dimen/ef_font_small"/>
     </LinearLayout>
 

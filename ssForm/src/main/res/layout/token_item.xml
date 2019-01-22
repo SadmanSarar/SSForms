@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:background="@color/colorPrimary"
+        android:background="@formColor/colorPrimary"
         android:gravity="center_vertical"
         android:paddingBottom="2dp"
         android:paddingEnd="5dp"
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Jacob Bonk"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:formColor/white" />
 
         <ImageView
             android:id="@+id/ivClose"

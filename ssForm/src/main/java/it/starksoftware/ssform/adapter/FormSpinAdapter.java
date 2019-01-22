@@ -78,7 +78,7 @@ public class FormSpinAdapter extends ArrayAdapter<FormSpinnerObject> {
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
         TextView label = new TextView(context);
-        label.setTextColor(Color.BLACK);
+        label.setTextFormColor(FormColor.BLACK);
         label.setText(values.get(position).getValue());
 
         return label;

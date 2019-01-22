@@ -786,6 +786,9 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 			if (formHeader.getFormTextStyle() != null) {
 				formHeader.getFormTextStyle().format(holder.mTextViewTitle);
 			}
+			if(formHeader.getContainerStyle()!=null) {
+				formHeader.getContainerStyle().format(holder.itemView);
+			}
 			
 		} else if (getItemViewType(position) == IS_DIVIDER_VIEW) {
 			FormDivider formHeader = (FormDivider) currentObject;

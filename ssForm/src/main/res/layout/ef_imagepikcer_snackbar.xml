@@ -14,7 +14,7 @@
         android:layout_toLeftOf="@+id/ef_snackbar_btn_action"
         android:layout_toStartOf="@+id/ef_snackbar_btn_action"
         android:maxLines="2"
-        android:textColor="@color/ef_white"
+        android:textColor="@formColor/ef_white"
         tools:text="There'es something about you that make me very happy and anxious at the same time"/>
 
     <Button

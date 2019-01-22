@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/colorFormMasterElementBackground"
+    android:background="@formColor/colorFormMasterElementBackground"
     android:layout_width="match_parent"
     android:id="@+id/itemContainer"
     android:layout_height="wrap_content">
@@ -28,7 +28,7 @@
                 android:id="@+id/formElementTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorFormMasterHeaderText"
+                android:textColor="@formColor/colorFormMasterHeaderText"
                 android:textSize="@dimen/headerTextSize"
                 android:fontFamily="sans-serif-thin"
                 android:layout_weight="1"
@@ -39,7 +39,7 @@
                 android:layout_width="20sp"
                 android:id="@+id/btnAdd"
                 android:layout_height="20sp"
-                android:background="@color/float_transparent"
+                android:background="@formColor/float_transparent"
                 android:src="@drawable/ic_add_black_24dp" />
 
         </LinearLayout>
@@ -59,6 +59,6 @@
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="2dp"
-        android:background="@color/colorFormMasterDivider" />
+        android:background="@formColor/colorFormMasterDivider" />
 
 </LinearLayout>

@@ -10,7 +10,7 @@ import android.support.v7.widget.AppCompatTextView;
  */
 public class FormTextStyle {
 	
-	private Color mTextColor;
+	private FormColor mTextFormColor;
 	private float mTextSize       = 0;
 	@StyleRes
 	private int   mTextAppearance = Integer.MIN_VALUE;
@@ -23,8 +23,8 @@ public class FormTextStyle {
 	}
 	
 	
-	public Color getTextColor() {
-		return mTextColor;
+	public FormColor getTextFormColor() {
+		return mTextFormColor;
 	}
 	
 	/**
@@ -32,8 +32,8 @@ public class FormTextStyle {
 	 *
 	 * @return
 	 */
-	public FormTextStyle setTextColor(@ColorInt int color) {
-		mTextColor = Color.fromInt(color);
+	public FormTextStyle setTextFormColor(@ColorInt int color) {
+		mTextFormColor = FormColor.fromInt(color);
 		return this;
 	}
 	
@@ -43,7 +43,7 @@ public class FormTextStyle {
 	 * @return
 	 */
 	public FormTextStyle setTextColorRes(@ColorRes int color) {
-		mTextColor = Color.fromRes(color);
+		mTextFormColor = FormColor.fromRes(color);
 		return this;
 	}
 	
@@ -53,7 +53,7 @@ public class FormTextStyle {
 	 * @return
 	 */
 	public FormTextStyle setTextColorHex(String color) {
-		mTextColor = Color.fromHex(color);
+		mTextFormColor = FormColor.fromHex(color);
 		return this;
 	}
 	
@@ -92,8 +92,8 @@ public class FormTextStyle {
 	}
 	
 	public void format(AppCompatTextView textView) {
-		if (getTextColor() != null) {
-			textView.setTextColor(getTextColor().getColor(textView.getContext()));
+		if (getTextFormColor() != null) {
+			textView.setTextColor(getTextFormColor().getColor(textView.getContext()));
 		}
 		if (getTextSize() > 0) {
 			textView.setTextSize(getTextSize());

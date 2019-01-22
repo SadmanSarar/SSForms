@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/colorFormMasterElementBackground"
+    android:background="@formColor/colorFormMasterElementBackground"
     android:layout_width="match_parent"
     android:id="@+id/itemContainer"
     android:layout_height="wrap_content">
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-thin"
-                android:textColor="@color/colorFormMasterHeaderText"
+                android:textColor="@formColor/colorFormMasterHeaderText"
                 android:textSize="@dimen/headerTextSize"
                 android:textStyle="bold"
                 tools:text="Personal Info" />
@@ -45,7 +45,7 @@
             android:gravity="left"
             android:inputType="textMultiLine"
             android:maxLines="10"
-            android:textColor="@color/colorFormMasterElementTextValue"
+            android:textColor="@formColor/colorFormMasterElementTextValue"
             android:textSize="@dimen/elementTextValueSize"
             tools:text="" />
 
@@ -57,6 +57,6 @@
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="2dp"
-        android:background="@color/colorFormMasterDivider" />
+        android:background="@formColor/colorFormMasterDivider" />
 
 </LinearLayout>

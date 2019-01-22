@@ -58,7 +58,7 @@ public class SignaturePickerActivity extends AppCompatActivity {
                     /*File photo = new File(getAlbumStorageDir("SignaturePad"), String.format("Signature_%d.jpg", System.currentTimeMillis()));
                     signatureBitmap = Bitmap.createBitmap(320,200, Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(signatureBitmap);
-                    canvas.drawColor(Color.WHITE);
+                    canvas.drawColor(FormColor.WHITE);
                     canvas.drawBitmap(tmp, 0, 0, null);
                     OutputStream stream = new FileOutputStream(photo);
                     signatureBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);

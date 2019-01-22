@@ -66,6 +66,9 @@ import it.starksoftware.ssform.model.FormObject;
 import it.starksoftware.ssform.model.FormSpinnerObject;
 import it.starksoftware.ssform.model.FormTokenObject;
 import it.starksoftware.ssform.model.Validator;
+import it.starksoftware.ssform.style.Background;
+import it.starksoftware.ssform.style.FormColor;
+import it.starksoftware.ssform.style.FormContainerStyle;
 import it.starksoftware.ssform.style.FormTextStyle;
 
 public class MainActivity extends AppCompatActivity implements
@@ -318,7 +321,14 @@ public class MainActivity extends AppCompatActivity implements
 						FormTextStyle
 								.createInstance()
 								.setTextAppearance(R.style.app_text)
-								.setTextColor(Color.RED)
+								.setTextFormColor(Color.RED)
+				).setContainerStyle(
+						FormContainerStyle.createInstance()
+								.setBackGround(
+										Background.fromColor(
+												FormColor.fromHex("#0000ff")
+										)
+								)
 				)
 				.setTag(130);
 		

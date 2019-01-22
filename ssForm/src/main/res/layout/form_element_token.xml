@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorFormMasterElementBackground"
+    android:background="@formColor/colorFormMasterElementBackground"
     android:layout_width="match_parent"
     android:minHeight="60sp"
     android:id="@+id/itemContainer"
@@ -25,7 +25,7 @@
             android:layout_weight="2"
             android:fontFamily="sans-serif-thin"
             android:gravity="center_vertical"
-            android:textColor="@color/colorFormMasterElementTextTitle"
+            android:textColor="@formColor/colorFormMasterElementTextTitle"
             android:textSize="14sp"
             android:textStyle="bold"
             tools:text="Tokens" />
@@ -43,7 +43,7 @@
 
         <ImageButton
             android:id="@+id/btnAddTokens"
-            android:background="@color/float_transparent"
+            android:background="@formColor/float_transparent"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_keyboard_arrow_right_grey_400_36dp" />
@@ -56,6 +56,6 @@
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="2dp"
-        android:background="@color/colorFormMasterDivider" />
+        android:background="@formColor/colorFormMasterDivider" />
 
 </LinearLayout>

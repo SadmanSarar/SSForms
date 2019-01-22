@@ -1,5 +1,6 @@
 package it.starksoftware.ssform.model;
 
+import it.starksoftware.ssform.style.FormContainerStyle;
 import it.starksoftware.ssform.style.FormTextStyle;
 
 /**
@@ -13,7 +14,8 @@ public class FormHeader implements FormObject {
 	private boolean visibility = true;
 	private int mTag;
 	private boolean required = false;
-	private FormTextStyle mFormTextStyle;
+	private FormTextStyle      mFormTextStyle;
+	private FormContainerStyle mContainerStyle;
 	
 	
 	public FormHeader() {
@@ -69,6 +71,15 @@ public class FormHeader implements FormObject {
 	
 	public FormHeader setHeaderTextStyle(FormTextStyle formTextStyle) {
 		mFormTextStyle = formTextStyle;
+		return this;
+	}
+	
+	public FormContainerStyle getContainerStyle() {
+		return mContainerStyle;
+	}
+	
+	public FormHeader setContainerStyle(FormContainerStyle containerStyle) {
+		mContainerStyle = containerStyle;
 		return this;
 	}
 	

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/colorFormMasterElementBackground"
+    android:background="@formColor/colorFormMasterElementBackground"
     android:layout_width="match_parent"
     android:id="@+id/itemContainer"
     android:layout_height="wrap_content">
@@ -15,8 +15,8 @@
 
         <Button
             android:layout_width="match_parent"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
+            android:background="@formColor/colorPrimary"
+            android:textColor="@formColor/white"
             android:id="@+id/btnAction"
             android:text="BOTTONE"
             android:layout_height="match_parent" />
