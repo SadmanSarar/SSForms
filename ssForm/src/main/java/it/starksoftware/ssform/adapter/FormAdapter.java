@@ -786,7 +786,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 			if (formHeader.getFormTextStyle() != null) {
 				formHeader.getFormTextStyle().format(holder.mTextViewTitle);
 			}
-			if(formHeader.getContainerStyle()!=null) {
+			if (formHeader.getContainerStyle() != null) {
 				formHeader.getContainerStyle().format(holder.itemView);
 			}
 			
@@ -796,6 +796,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 			FormElement formElement = (FormElement) currentObject;
 			holder.mTextViewTitle.setText(formElement.getTitle());
 			holder.mEditTextValue.setText(formElement.getValue());
+			
+			if (formElement.getTitleTextStyle() != null) {
+				formElement.getTitleTextStyle().format(holder.mTextViewTitle);
+			}
+			
+			if (formElement.getValueTextStyle() != null) {
+				formElement.getValueTextStyle().format(holder.mEditTextValue);
+			}
+			
+			if (formElement.getContainerStyle() != null) {
+				formElement.getContainerStyle().format(holder.itemView);
+			}
 			
 			switch (formElement.getType()) {
 				case FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:

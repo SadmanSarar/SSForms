@@ -69,6 +69,7 @@ import it.starksoftware.ssform.model.Validator;
 import it.starksoftware.ssform.style.Background;
 import it.starksoftware.ssform.style.FormColor;
 import it.starksoftware.ssform.style.FormContainerStyle;
+import it.starksoftware.ssform.style.FormEditTextStyle;
 import it.starksoftware.ssform.style.FormTextStyle;
 
 public class MainActivity extends AppCompatActivity implements
@@ -164,7 +165,26 @@ public class MainActivity extends AppCompatActivity implements
 				.setType(FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE)
 				.setRequired(true)
 				.setRequiredResponseMessage("!!! REQUIRED !!!")
-				.setTag(10);
+				.setTag(10)
+				.setValueTextStyle(
+						FormEditTextStyle
+								.createInstance()
+								.setTextAppearance(R.style.app_text)
+								.setTextFormColor(Color.BLUE)
+				)
+				.setTitleTextStyle(
+						FormTextStyle
+								.createInstance()
+								.setTextAppearance(R.style.app_text)
+								.setTextFormColor(Color.RED)
+				).setContainerStyle(
+						FormContainerStyle.createInstance()
+								.setBackGround(
+										Background.fromColor(
+												FormColor.fromHex("#2e2e2e")
+										)
+								)
+				);
 		
 		formElementPickerMultiple = FormElement.createInstance()
 				.setTitle("MULTIPLE PICKER")
