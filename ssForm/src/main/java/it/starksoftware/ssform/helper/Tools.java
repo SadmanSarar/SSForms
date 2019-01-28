@@ -2,9 +2,12 @@ package it.starksoftware.ssform.helper;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -44,5 +47,9 @@ public class Tools {
         }
         return false;
     }
-
+	
+	public static int dpToPx(Context context,int dp) {
+		Resources r = context.getResources();
+		return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+	}
 }

@@ -5,36 +5,24 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
-import android.text.method.KeyListener;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -43,26 +31,19 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.codemybrainsout.placesearch.PlaceSearchDialog;
 import com.github.abdularis.civ.CircleImageView;
-import com.google.android.flexbox.FlexboxLayout;
-import com.hsalf.smilerating.BaseRating;
-import com.hsalf.smilerating.SmileRating;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
-import it.starksoftware.ssform.DateSwitcher.DateSwitcher;
 import it.starksoftware.ssform.R;
 import it.starksoftware.ssform.activities.RxAttachPicker;
 import it.starksoftware.ssform.activities.RxImagePicker;
@@ -71,16 +52,9 @@ import it.starksoftware.ssform.activities.RxTokenPicker;
 import it.starksoftware.ssform.attach.AttachPicker;
 import it.starksoftware.ssform.features.ImagePicker;
 import it.starksoftware.ssform.helper.AppTools;
-import it.starksoftware.ssform.interfaces.ButtonCallBack;
-import it.starksoftware.ssform.interfaces.CheckBoxCallBack;
-import it.starksoftware.ssform.interfaces.DateSwitcherCallBack;
 import it.starksoftware.ssform.interfaces.DateTimeCallBack;
-import it.starksoftware.ssform.interfaces.RatingCallBack;
-import it.starksoftware.ssform.interfaces.RatingSmileCallBack;
 import it.starksoftware.ssform.interfaces.SearchableSpinnerCallBack;
-import it.starksoftware.ssform.interfaces.SegmentCallBack;
-import it.starksoftware.ssform.interfaces.SpinnerCallBack;
-import it.starksoftware.ssform.interfaces.SwitchCallBack;
+import it.starksoftware.ssform.listeners.DataSetProvider;
 import it.starksoftware.ssform.model.FormDivider;
 import it.starksoftware.ssform.model.FormElement;
 import it.starksoftware.ssform.model.FormElementAttach;
@@ -109,41 +83,54 @@ import it.starksoftware.ssform.model.FormSpinnerObject;
 import it.starksoftware.ssform.model.FormTokenObject;
 import it.starksoftware.ssform.model.Image;
 import it.starksoftware.ssform.model.TokesTags;
-import it.starksoftware.ssform.ratings.BaseRatingBar;
-import it.starksoftware.ssform.segmented.SegmentedGroup;
 import it.starksoftware.ssform.signaturepad.SignaturePicker;
 import it.starksoftware.ssform.tokens.TokensPicker;
-import it.starksoftware.ssform.view.GridSpacingItemDecoration;
+import it.starksoftware.ssform.viewholders.FormAttachViewHolder;
+import it.starksoftware.ssform.viewholders.FormButtonViewHolder;
+import it.starksoftware.ssform.viewholders.FormCheckBoxViewHolder;
+import it.starksoftware.ssform.viewholders.FormCustomKeyboardViewHolder;
+import it.starksoftware.ssform.viewholders.FormDateSwitcherViewHolder;
+import it.starksoftware.ssform.viewholders.FormDateTimeViewHolder;
+import it.starksoftware.ssform.viewholders.FormDefaultViewHolder;
+import it.starksoftware.ssform.viewholders.FormDividerViewHolder;
+import it.starksoftware.ssform.viewholders.FormHeaderViewHolder;
+import it.starksoftware.ssform.viewholders.FormImageViewHolder;
+import it.starksoftware.ssform.viewholders.FormImageViewMultipleViewHolder;
+import it.starksoftware.ssform.viewholders.FormInputLayoutViewHolder;
+import it.starksoftware.ssform.viewholders.FormMemoViewHolder;
+import it.starksoftware.ssform.viewholders.FormPlaceDialogViewHolder;
+import it.starksoftware.ssform.viewholders.FormProfileViewHolder;
+import it.starksoftware.ssform.viewholders.FormRatingViewHolder;
+import it.starksoftware.ssform.viewholders.FormSearchableSpinnerViewHolder;
+import it.starksoftware.ssform.viewholders.FormSegmentViewHolder;
+import it.starksoftware.ssform.viewholders.FormSignatureViewHolder;
+import it.starksoftware.ssform.viewholders.FormSmileRatingViewHolder;
+import it.starksoftware.ssform.viewholders.FormSpinnerViewHolder;
+import it.starksoftware.ssform.viewholders.FormSwitchViewHolder;
+import it.starksoftware.ssform.viewholders.FormTokenViewHolder;
+import it.starksoftware.ssform.viewholders.FormTypeManager;
 import it.starksoftware.ssform.viewholders.FormViewHolder;
 import rx.Observable;
 import rx.functions.Action1;
 
-public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
+public class FormAdapter extends RecyclerView.Adapter<FormViewHolder>
+		implements FormImageViewHolder.Callback,
+		DataSetProvider,
+		FormAttachViewHolder.Callback,
+		FormSignatureViewHolder.Callback,
+		FormImageViewMultipleViewHolder.Callback,
+		FormDateTimeViewHolder.Callback,
+		FormPlaceDialogViewHolder.Callback,
+		FormTokenViewHolder.Callback,
+		FormInputLayoutViewHolder.Callback,
+		FormProfileViewHolder.Callback,
+		FormDefaultViewHolder.Callback,
+		FormSearchableSpinnerViewHolder.Callback {
 	
 	// defining marker for header view
-	private int IS_HEADER_VIEW             = 0;
-	private int IS_DEFAULT_VIEW            = 1;
-	private int IS_SWITCH_VIEW             = 2;
-	private int IS_IMAGE_VIEW              = 3;
-	private int IS_SPINNER_VIEW            = 4;
-	private int IS_MEMO_VIEW               = 5;
-	private int IS_DIVIDER_VIEW            = 6;
-	private int IS_SEGMENT_VIEW            = 7;
-	private int IS_ATTACH_VIEW             = 8;
-	private int IS_SIGNATURE_VIEW          = 9;
-	private int IS_RATING_VIEW             = 10;
-	private int IS_MULTIPLEIMAGE_VIEW      = 11;
-	private int IS_CUSTOM_KEYBOARD         = 12;
-	private int IS_DATE_TIME               = 13;
-	private int IS_SEARCHABLE_SPINNER_VIEW = 14;
-	private int IS_BUTTON_VIEW             = 15;
-	private int IS_CHECKBOX_VIEW           = 16;
-	private int IS_PLACE_DIALOG_VIEW       = 17;
-	private int IS_TOKEN                   = 18;
-	private int IS_DATE_SWITCHER           = 19;
-	private int IS_INPUT_LAYOUT            = 20;
-	private int IS_PROFILE_VIEW            = 21;
-	private int IS_SMILE_RATING            = 22;
+	
+	
+	private FormTypeManager mFormTypeManager = new FormTypeManager();
 	
 	private ArrayList<Image>  images  = new ArrayList<>();
 	private ArrayList<String> attachs = new ArrayList<>();
@@ -599,166 +586,14 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 	
 	@Override
 	public int getItemViewType(int position) {
-		if (mDataset.get(position).getElementType().contentEquals("Header")) {
-			return IS_HEADER_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Switch")) {
-			return IS_SWITCH_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("ImageView")) {
-			return IS_IMAGE_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Spinner")) {
-			return IS_SPINNER_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Memo")) {
-			return IS_MEMO_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Divider")) {
-			return IS_DIVIDER_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Segment")) {
-			return IS_SEGMENT_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Attach")) {
-			return IS_ATTACH_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Signature")) {
-			return IS_SIGNATURE_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Rating")) {
-			return IS_RATING_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("ImageViewMultiple")) {
-			return IS_MULTIPLEIMAGE_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("CustomKeyboard")) {
-			return IS_CUSTOM_KEYBOARD;
-		} else if (mDataset.get(position).getElementType().contentEquals("DateTime")) {
-			return IS_DATE_TIME;
-		} else if (mDataset.get(position).getElementType().contentEquals("SearchableSpinner")) {
-			return IS_SEARCHABLE_SPINNER_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Button")) {
-			return IS_BUTTON_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("CheckBox")) {
-			return IS_CHECKBOX_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("PlaceDialog")) {
-			return IS_PLACE_DIALOG_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("Token")) {
-			return IS_TOKEN;
-		} else if (mDataset.get(position).getElementType().contentEquals("DateSwitcher")) {
-			return IS_DATE_SWITCHER;
-		} else if (mDataset.get(position).getElementType().contentEquals("InputLayout")) {
-			return IS_INPUT_LAYOUT;
-		} else if (mDataset.get(position).getElementType().contentEquals("ProfileView")) {
-			return IS_PROFILE_VIEW;
-		} else if (mDataset.get(position).getElementType().contentEquals("SmileRating")) {
-			return IS_SMILE_RATING;
-		} else {
-			return IS_DEFAULT_VIEW;
-		}
+		return mFormTypeManager.getViewType(mDataset.get(position).getElementType());
 	}
 
 //
 	
 	@Override
 	public FormViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		
-		if (parent != null) {
-			LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-			View           v;
-			FormViewHolder vh;
-			switch (viewType) {
-				case 0:
-					v = inflater.inflate(R.layout.form_element_header, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_HEADER_VIEW, null);
-					break;
-				case 1:
-					v = inflater.inflate(R.layout.form_element, parent, false);
-					vh = new FormViewHolder(v, new FormCustomEditTextListener(), null, IS_DEFAULT_VIEW, null);
-					break;
-				case 2:
-					v = inflater.inflate(R.layout.form_element_switch, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_SWITCH_VIEW, null);
-					break;
-				case 3:
-					v = inflater.inflate(R.layout.form_element_imageview, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_IMAGE_VIEW, null);
-					break;
-				case 4:
-					v = inflater.inflate(R.layout.form_element_spinner, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_SPINNER_VIEW, null);
-					break;
-				case 5:
-					v = inflater.inflate(R.layout.form_element_memo, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_MEMO_VIEW, new FormCustomEditMemoTextListener());
-					break;
-				case 6:
-					v = inflater.inflate(R.layout.form_element_divider, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_DIVIDER_VIEW, null);
-					break;
-				case 7:
-					v = inflater.inflate(R.layout.form_element_segment, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_SEGMENT_VIEW, null);
-					break;
-				case 8:
-					v = inflater.inflate(R.layout.form_element_attach, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_ATTACH_VIEW, null);
-					break;
-				case 9:
-					v = inflater.inflate(R.layout.form_element_signature, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_SIGNATURE_VIEW, null);
-					break;
-				case 10:
-					v = inflater.inflate(R.layout.form_element_rating, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_RATING_VIEW, null);
-					break;
-				case 11:
-					v = inflater.inflate(R.layout.form_element_imageview_multiple, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_MULTIPLEIMAGE_VIEW, null);
-					break;
-				case 12:
-					v = inflater.inflate(R.layout.form_element_custom_keyboard, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_CUSTOM_KEYBOARD, null);
-					break;
-				case 13:
-					v = inflater.inflate(R.layout.form_element_datetime, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_DATE_TIME, null);
-					break;
-				case 14:
-					v = inflater.inflate(R.layout.form_element_searchable_spinner, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_SEARCHABLE_SPINNER_VIEW, null);
-					break;
-				case 15:
-					v = inflater.inflate(R.layout.form_element_button, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_BUTTON_VIEW, null);
-					break;
-				case 16:
-					v = inflater.inflate(R.layout.form_element_checkbox, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_CHECKBOX_VIEW, null);
-					break;
-				case 17:
-					v = inflater.inflate(R.layout.form_element_place_dialog, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_PLACE_DIALOG_VIEW, null);
-					break;
-				case 18:
-					v = inflater.inflate(R.layout.form_element_token, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_TOKEN, null);
-					break;
-				case 19:
-					v = inflater.inflate(R.layout.form_element_date_switcher, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_DATE_SWITCHER, null);
-					break;
-				case 20:
-					v = inflater.inflate(R.layout.form_element_input_layout, parent, false);
-					vh = new FormViewHolder(v, null, new FormCustomEditTextInputLayoutListener(), IS_INPUT_LAYOUT, null);
-					break;
-				case 21:
-					v = inflater.inflate(R.layout.form_element_profileview, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_PROFILE_VIEW, null);
-					break;
-				case 22:
-					v = inflater.inflate(R.layout.form_element_smile_rating, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_SMILE_RATING, null);
-					break;
-				default:
-					v = inflater.inflate(R.layout.form_element_header, parent, false);
-					vh = new FormViewHolder(v, null, null, IS_HEADER_VIEW, null);
-					break;
-			}
-			return vh;
-		} else {
-			return null;
-		}
+		return mFormTypeManager.creteViewHoolderForType(parent, viewType, this);
 	}
 	
 	
@@ -780,656 +615,93 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 		FormObject currentObject = mDataset.get(position);
 		
-		if (getItemViewType(position) == IS_HEADER_VIEW) {
+		if (getItemViewType(position) == FormTypeManager.IS_HEADER_VIEW && holder instanceof FormHeaderViewHolder) {
 			FormHeader formHeader = (FormHeader) currentObject;
-			holder.mTextViewTitle.setText(formHeader.getTitle());
-			if (formHeader.getFormTextStyle() != null) {
-				formHeader.getFormTextStyle().format(holder.mTextViewTitle);
-			}
-			if (formHeader.getContainerStyle() != null) {
-				formHeader.getContainerStyle().format(holder.itemView);
-			}
-			
-		} else if (getItemViewType(position) == IS_DIVIDER_VIEW) {
+			((FormHeaderViewHolder) holder).bind(formHeader);
+		} else if (getItemViewType(position) == FormTypeManager.IS_DIVIDER_VIEW) {
 			FormDivider formHeader = (FormDivider) currentObject;
-		} else if (getItemViewType(position) == IS_DEFAULT_VIEW) {
+			((FormDividerViewHolder) holder).bind(formHeader);
+		} else if (getItemViewType(position) == FormTypeManager.IS_DEFAULT_VIEW) {
 			FormElement formElement = (FormElement) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mEditTextValue.setText(formElement.getValue());
+			((FormDefaultViewHolder) holder).bind(formElement);
 			
-			if (formElement.getTitleTextStyle() != null) {
-				formElement.getTitleTextStyle().format(holder.mTextViewTitle);
-			}
-			
-			if (formElement.getValueTextStyle() != null) {
-				formElement.getValueTextStyle().format(holder.mEditTextValue);
-			}
-			
-			if (formElement.getContainerStyle() != null) {
-				formElement.getContainerStyle().format(holder.itemView);
-			}
-			
-			switch (formElement.getType()) {
-				case FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:
-					holder.mEditTextValue.setMaxLines(1);
-					setEditTextFocusEnabled(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_EDITTEXT_TEXT_MULTILINE:
-					holder.mEditTextValue.setSingleLine(false);
-					holder.mEditTextValue.setMaxLines(4);
-					setEditTextFocusEnabled(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_EDITTEXT_NUMBER:
-					holder.mEditTextValue.setRawInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
-					KeyListener keyListenerkeyListenerEDITTEXT_NUMBER = DigitsKeyListener.getInstance("1234567890.");
-					holder.mEditTextValue.setKeyListener(keyListenerkeyListenerEDITTEXT_NUMBER);
-					setEditTextFocusEnabled(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_EDITTEXT_NUMBER_INTEGER:
-					holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-					KeyListener keyListenerNUMBER_INTEGER = DigitsKeyListener.getInstance("1234567890");
-					holder.mEditTextValue.setKeyListener(keyListenerNUMBER_INTEGER);
-					setEditTextFocusEnabled(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_EDITTEXT_EMAIL:
-					holder.mEditTextValue.setRawInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-					setEditTextFocusEnabled(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_EDITTEXT_PHONE:
-					holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_PHONE);
-					setEditTextFocusEnabled(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_EDITTEXT_PASSWORD:
-					holder.mEditTextValue.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-					holder.mEditTextValue.setSelection(holder.mEditTextValue.getText().length());
-					setEditTextFocusEnabled(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_PICKER_DATE:
-					setDatePicker(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_PICKER_TIME:
-					setTimePicker(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_SPINNER_DROPDOWN:
-					setSingleOptionsDialog(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				case FormElement.TYPE_PICKER_MULTI_CHECKBOX:
-					setMultipleOptionsDialog(holder.mEditTextValue, position, holder.layoutRow);
-					break;
-				default:
-					break;
-			}
-			
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-			
-		} else if (getItemViewType(position) == IS_INPUT_LAYOUT) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_INPUT_LAYOUT) {
 			FormElementInputLayout formElement = (FormElementInputLayout) currentObject;
-			holder.editText.setHint(formElement.getmHint());
-			//holder.editText.setText(formElement.getValue());
+			((FormInputLayoutViewHolder) holder).bind(formElement);
 			
-			switch (formElement.getType()) {
-				case FormElementInputLayout.TYPE_EDITTEXT_TEXT_SINGLELINE:
-					holder.editText.setMaxLines(1);
-					setEditTextInputLayoutFocusEnabled(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_EDITTEXT_TEXT_MULTILINE:
-					holder.editText.setSingleLine(false);
-					holder.editText.setMaxLines(4);
-					setEditTextInputLayoutFocusEnabled(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_EDITTEXT_NUMBER:
-					holder.editText.setRawInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
-					KeyListener keyListenerkeyListenerEDITTEXT_NUMBER = DigitsKeyListener.getInstance("1234567890.");
-					holder.editText.setKeyListener(keyListenerkeyListenerEDITTEXT_NUMBER);
-					setEditTextInputLayoutFocusEnabled(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_EDITTEXT_NUMBER_INTEGER:
-					holder.editText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-					KeyListener keyListenerNUMBER_INTEGER = DigitsKeyListener.getInstance("1234567890");
-					holder.editText.setKeyListener(keyListenerNUMBER_INTEGER);
-					setEditTextInputLayoutFocusEnabled(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_EDITTEXT_EMAIL:
-					holder.editText.setRawInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-					setEditTextInputLayoutFocusEnabled(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_EDITTEXT_PHONE:
-					holder.editText.setRawInputType(InputType.TYPE_CLASS_PHONE);
-					setEditTextInputLayoutFocusEnabled(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_EDITTEXT_PASSWORD:
-					holder.editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-					holder.editText.setSelection(holder.editText.getText().length());
-					setEditTextInputLayoutFocusEnabled(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_PICKER_DATE:
-					setDatePickerInputLayout(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_PICKER_TIME:
-					setTimePickerInputLayout(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_SPINNER_DROPDOWN:
-					setSingleOptionsDialogInputLayout(holder.editText, position, holder.layoutRow);
-					break;
-				case FormElementInputLayout.TYPE_PICKER_MULTI_CHECKBOX:
-					setMultipleOptionsDialogInputLayout(holder.editText, position, holder.layoutRow);
-					break;
-				default:
-					break;
-			}
-			
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-			
-		} else if (getItemViewType(position) == IS_SWITCH_VIEW) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_SWITCH_VIEW) {
 			final FormElementSwitch formElement = (FormElementSwitch) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mEditSwitchValue.setChecked(formElement.getValue());
-			final SwitchCallBack switchCallBack = formElement.getSwitchCallBack();
-			holder.mEditSwitchValue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					switchCallBack.callbackSwitchReturn(formElement, formElement.getTag(), isChecked);
-					formElement.setValue(isChecked);
-				}
-			});
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
+			if (holder instanceof FormSwitchViewHolder) {
+				((FormSwitchViewHolder) holder).bind(formElement);
 			}
-		} else if (getItemViewType(position) == IS_SEGMENT_VIEW) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_SEGMENT_VIEW) {
 			final FormElementSegment formElement = (FormElementSegment) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			SegmentedGroup        segmentedGroup  = holder.mEditSegmentGroupValue;
-			final SegmentCallBack segmentCallBack = formElement.getSegmentCallBack();
-			final RadioButton     rbOne           = (RadioButton) segmentedGroup.findViewById(R.id.radioOne);
-			final RadioButton     rbTwo           = (RadioButton) segmentedGroup.findViewById(R.id.radioTwo);
-			rbOne.setText(formElement.getSegmentedButtons().get(0).getText());
-			rbOne.setTag(formElement.getSegmentedButtons().get(0).getTag());
-			rbOne.setChecked(formElement.getValueCheckA());
-			
-			rbTwo.setText(formElement.getSegmentedButtons().get(1).getText());
-			rbTwo.setTag(formElement.getSegmentedButtons().get(1).getTag());
-			rbTwo.setChecked(formElement.getValueCheckB());
-			
-			segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-				@Override
-				public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-					if (checkedId == R.id.radioOne) {
-						segmentCallBack.callbackSegmentReturn(radioGroup, 0);
-						formElement.setValueCheckA(true);
-						formElement.setValueCheckB(false);
-						rbOne.setChecked(true);
-						rbTwo.setChecked(false);
-					} else if (checkedId == R.id.radioTwo) {
-						segmentCallBack.callbackSegmentReturn(radioGroup, 1);
-						formElement.setValueCheckA(false);
-						formElement.setValueCheckB(true);
-						rbOne.setChecked(false);
-						rbTwo.setChecked(true);
-					}
-				}
-			});
-			
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_IMAGE_VIEW) {
+			((FormSegmentViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_IMAGE_VIEW) {
 			FormElementImageView formElement = (FormElementImageView) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mEditImageViewValue.setImageBitmap(formElement.getValue());
-			setImagePicker(holder.mEditImageViewValue, position, holder.layoutRow);
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
+			if (holder instanceof FormImageViewHolder) {
+				((FormImageViewHolder) holder).bind(formElement);
 			}
-		} else if (getItemViewType(position) == IS_PROFILE_VIEW) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_PROFILE_VIEW) {
 			FormElementProfileView formElement = (FormElementProfileView) currentObject;
-			holder.formElementProfileName.setText(formElement.getProfileName());
-			if (formElement.getProfileImage() != null) {
-				holder.circleImageView.setImageBitmap(formElement.getProfileImage());
-			}
-			setImageProfilePicker(holder.circleImageView, position, holder.layoutRow);
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_TOKEN) {
+			((FormProfileViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_TOKEN) {
 			final FormElementToken formElement = (FormElementToken) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			if (formElement.getValue() != null) {
-				if (((FlexboxLayout) holder.tokens).getChildCount() > 0) {
-					((FlexboxLayout) holder.tokens).removeAllViews();
-				}
-				for (int i = 0; i < formElement.getValue().size(); i++) {
-					holder.tokens.addView((View) formElement.getValue().get(i).getTokenItem(), 0);
-				}
-			}
-			setTokenPicker(holder.btnAddTokens, position, formElement);
+			((FormTokenViewHolder) holder).bind(formElement);
 			
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_SIGNATURE_VIEW) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_SIGNATURE_VIEW) {
 			FormElementSignature formElement = (FormElementSignature) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mEditImageViewValue.setImageBitmap(formElement.getValue());
-			setSignaturePicker(holder.mEditImageViewValue, position, holder.layoutRow);
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_PLACE_DIALOG_VIEW) {
+			((FormSignatureViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_PLACE_DIALOG_VIEW) {
 			FormElementPlaceDialog formElement = (FormElementPlaceDialog) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mTextViewValue.setText(formElement.getValue());
-			setPlaceDialogPicker(holder.mTextViewValue, position, holder.layoutRow, formElement);
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_MEMO_VIEW) {
+			
+		} else if (getItemViewType(position) == FormTypeManager.IS_MEMO_VIEW) {
 			FormElementMemo formElement = (FormElementMemo) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mEditMemoTextValue.setText(formElement.getValue());
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_SMILE_RATING) {
+			((FormMemoViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_SMILE_RATING) {
 			final FormElementSmileRating formElement = (FormElementSmileRating) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
+			((FormSmileRatingViewHolder) holder).bind(formElement);
 			
-			Iterator myVeryOwnIterator = formElement.getSmileTitleByValue().keySet().iterator();
-			while (myVeryOwnIterator.hasNext()) {
-				Integer key   = (Integer) myVeryOwnIterator.next();
-				String  value = formElement.getSmileTitleByValue().get(key);
-				holder.mSmileValue.setNameForSmile(key, value);
-			}
-			
-			holder.mSmileValue.setSelectedSmile(formElement.getValue());
-			final RatingSmileCallBack callback = formElement.getRatingSmileCallBack();
-			holder.mSmileValue.setOnSmileySelectionListener(new SmileRating.OnSmileySelectionListener() {
-				@Override
-				public void onSmileySelected(@BaseRating.Smiley int smiley, boolean reselected) {
-					switch (smiley) {
-						case SmileRating.NONE:
-							formElement.setValue(0);
-							if (callback != null) {
-								callback.callbackRatingSmileReturn(0);
-							}
-							break;
-						case SmileRating.TERRIBLE:
-							formElement.setValue(1);
-							if (callback != null) {
-								callback.callbackRatingSmileReturn(1);
-							}
-							break;
-						case SmileRating.BAD:
-							formElement.setValue(2);
-							if (callback != null) {
-								callback.callbackRatingSmileReturn(2);
-							}
-							break;
-						case SmileRating.GOOD:
-							formElement.setValue(3);
-							if (callback != null) {
-								callback.callbackRatingSmileReturn(3);
-							}
-							break;
-						case SmileRating.OKAY:
-							formElement.setValue(4);
-							if (callback != null) {
-								callback.callbackRatingSmileReturn(4);
-							}
-							break;
-						case SmileRating.GREAT:
-							formElement.setValue(5);
-							if (callback != null) {
-								callback.callbackRatingSmileReturn(5);
-							}
-							break;
-					}
-				}
-			});
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_DATE_SWITCHER) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_DATE_SWITCHER) {
 			final FormElementDateSwitcher formElement = (FormElementDateSwitcher) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.dateSwitcher.setType(formElement.getDateSwitcherType());
-			final DateSwitcherCallBack callback = formElement.getDateSwitcherCallBack();
-			holder.dateSwitcher.setOnDateChangeListener(new DateSwitcher.OnDateChangeListener() {
-				@Override
-				public void onChange(Map<DateSwitcher.DateRange, Date> dateRange) {
-					Date topDate    = dateRange.get(DateSwitcher.DateRange.TOP_DATE);
-					Date bottomDate = dateRange.get(DateSwitcher.DateRange.BOTTOM_DATE);
-					if (callback != null) {
-						callback.callbackDateSwitcherReturn(topDate, bottomDate, formElement, formElement.getTag());
-					}
-				}
-			});
+			((FormDateSwitcherViewHolder) holder).bind(formElement);
 			
-		} else if (getItemViewType(position) == IS_BUTTON_VIEW) {
-			final FormElementButton formElement    = (FormElementButton) currentObject;
-			final ButtonCallBack    buttonCallBack = formElement.getButtonCallBack();
-			holder.mButtonTitle.setText(formElement.getTitle());
-			holder.mButtonTitle.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					buttonCallBack.callbackButtonReturn(formElement, formElement.getTag());
-				}
-			});
-		} else if (getItemViewType(position) == IS_ATTACH_VIEW) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_BUTTON_VIEW) {
+			final FormElementButton formElement = (FormElementButton) currentObject;
+			((FormButtonViewHolder) holder).bind(formElement);
+			
+		} else if (getItemViewType(position) == FormTypeManager.IS_ATTACH_VIEW) {
 			FormElementAttach formElement = (FormElementAttach) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mTextViewAttachValue.setText(formElement.getValue());
-			setAttachPicker(holder.mTextViewAttachValue, position, holder.layoutRow);
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_RATING_VIEW) {
-			final FormElementRating formElement    = (FormElementRating) currentObject;
-			final RatingCallBack    ratingCallBack = formElement.getRatingCallBack();
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mEditRatingValue.setNumStars(formElement.getStars());
-			holder.mEditRatingValue.setRating(formElement.getRatingValue());
-			holder.mEditRatingValue.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
-				@Override
-				public void onRatingChange(BaseRatingBar ratingBar, float rating) {
-					formElement.setRatingValue(Math.round(rating));
-					ratingCallBack.callbackRatingReturn(rating);
-				}
-			});
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_SEARCHABLE_SPINNER_VIEW) {
+			((FormAttachViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_RATING_VIEW) {
+			final FormElementRating formElement = (FormElementRating) currentObject;
+			((FormRatingViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_SEARCHABLE_SPINNER_VIEW) {
 			final FormElementSearchableSpinner formElement = (FormElementSearchableSpinner) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mTextViewDetail.setText(formElement.getValue());
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
+			((FormSearchableSpinnerViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_SPINNER_VIEW) {
+			FormElementSpinner formElement = (FormElementSpinner) currentObject;
+			if (holder instanceof FormSpinnerViewHolder) {
+				((FormSpinnerViewHolder) holder).bind(formElement);
 			}
-			setSearchableSpinnerView(holder.mTextViewDetail, position, holder.layoutRow, formElement);
-			
-			
-		} else if (getItemViewType(position) == IS_SPINNER_VIEW) {
-			final FormElementSpinner formElement = (FormElementSpinner) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			final FormSpinAdapter adapter         = formElement.getSpinnerAdapter();
-			final SpinnerCallBack spinnerCallBack = formElement.getCallback();
-			holder.mEditSpinnerValue.setAdapter(adapter);
-			if (formElement.getValue() != null) {
-				int spinnerPosition = adapter.indexOfSpinner(formElement.getValue());
-				holder.mEditSpinnerValue.setSelection(spinnerPosition);
-			}
-			
-			if (formElement.getRefresh()) {
-				holder.mEditSpinnerValue.setTag(formElement.getTag());
-			}
-			
-			holder.mEditSpinnerValue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-				@Override
-				public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-					FormSpinnerObject user = adapter.getItem(position);
-					formElement.setValue(user);
-					if (spinnerCallBack != null) {
-						spinnerCallBack.callbackSpinnerReturn(user, formElement.getTag(), holder.mEditSpinnerValue);
-					}
-				}
-				
-				@Override
-				public void onNothingSelected(AdapterView<?> adapter) {
-				
-				}
-			});
-			holder.mEditSpinnerValue.setOnFocusChangeListener(new AdapterView.OnFocusChangeListener() {
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					String aa = "";
-				}
-			});
-			
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-			
-		} else if (getItemViewType(position) == IS_MULTIPLEIMAGE_VIEW) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_MULTIPLEIMAGE_VIEW) {
 			FormElementImageMultipleView formElement = (FormElementImageMultipleView) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, 10);
-			holder.mEditImageViewMultipleValue.setLayoutManager(mLayoutManager);
-			holder.mEditImageViewMultipleValue.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-			holder.mEditImageViewMultipleValue.setItemAnimator(new DefaultItemAnimator());
-			holder.mEditImageViewMultipleValue.setAdapter(formElement.getImgAdapter());
-			setImagePickerMultiple(holder.btnAdd, position, formElement.getMaxImages(), holder.layoutRow);
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_CHECKBOX_VIEW) {
+			((FormImageViewMultipleViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_CHECKBOX_VIEW) {
 			final FormElementCheckBox formElement = (FormElementCheckBox) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			
-			if (formElement.getCallback() != null) {
-				final CheckBoxCallBack checkBoxCallBack = formElement.getCallback();
-				holder.mEditCheckBoxValue.setChecked(formElement.isChecked());
-				holder.mEditCheckBoxValue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						checkBoxCallBack.callbackCheckBoxReturn(formElement.getTag(), holder.mEditCheckBoxValue, isChecked);
-					}
-				});
-			}
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_CUSTOM_KEYBOARD) {
+			((FormCheckBoxViewHolder) holder).bind(formElement);
+		} else if (getItemViewType(position) == FormTypeManager.IS_CUSTOM_KEYBOARD) {
 			final FormElementCustomKeyboard formElement = (FormElementCustomKeyboard) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			holder.mEditTextValue.setText(formElement.getValue());
-			holder.mEditTextValue.setFocusableInTouchMode(true);
-			holder.layoutRow.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					formElement.getmKeyboard().registerEditText(holder.mEditTextValue, formElement);
-				}
-			});
-			formElement.getmKeyboard().registerEditText(holder.mEditTextValue, formElement);
+			((FormCustomKeyboardViewHolder) holder).bind(formElement);
 			
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-		} else if (getItemViewType(position) == IS_DATE_TIME) {
+		} else if (getItemViewType(position) == FormTypeManager.IS_DATE_TIME) {
 			final FormElementDateTime formElement = (FormElementDateTime) currentObject;
-			holder.mTextViewTitle.setText(formElement.getTitle());
-			switch (formElement.getType()) {
-				case FormElementDateTime.TYPE_PICKER_DATE:
-					if (formElement.getValue() != null) {
-						DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-						holder.mTextViewValue.setText(dateFormat.format(formElement.getValue()));
-					}
-					setDatePickerTextView(holder.mTextViewValue, position, holder.layoutRow, formElement.getMinDate(), formElement.getMaxDate());
-					break;
-				case FormElementDateTime.TYPE_PICKER_TIME:
-					if (formElement.getValue() != null) {
-						DateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-						holder.mTextViewValue.setText(dateFormat.format(formElement.getValue()));
-					}
-					setTimePickerTextView(holder.mTextViewValue, position, holder.layoutRow);
-					break;
-				case FormElementDateTime.TYPE_PICKER_DATE_TIME:
-					if (formElement.getValue() != null) {
-						DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-						holder.mTextViewValue.setText(dateFormat.format(formElement.getValue()));
-					}
-					setDateTimePickerTextView(holder.mTextViewValue, position, holder.layoutRow, formElement);
-					break;
-				default:
-					break;
-			}
-			
-			if (holder.linearLayout.getLayoutParams() != null) {
-				if (!formElement.getVisibility()) {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = 0;
-					holder.linearLayout.setLayoutParams(params);
-				} else {
-					ViewGroup.LayoutParams params = holder.linearLayout.getLayoutParams();
-					params.height = -2;
-					holder.linearLayout.setLayoutParams(params);
-				}
-			}
-			
+			((FormDateTimeViewHolder) holder).bind(formElement);
 		}
 	}
 	
-	
-	private int dpToPx(int dp) {
-		Resources r = mContext.getResources();
-		return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-	}
-	
-	
-	private void setTokenPicker(ImageButton imgButton, final int position, final FormElementToken formElement) {
+	@Override
+	public void setTokenPicker(ImageButton imgButton, final int position, final FormElementToken formElement) {
 		imgButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -1439,7 +711,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setSignaturePicker(ImageView imgView, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setSignaturePicker(ImageView imgView, final int position, final LinearLayout layoutRow) {
 		imgView.setFocusableInTouchMode(false);
 		imgView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1450,7 +723,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setPlaceDialogPicker(final TextView tv, final int position, final LinearLayout layoutRow, final FormElementPlaceDialog formElement) {
+	@Override
+	public void setPlaceDialogPicker(final TextView tv, final int position, final LinearLayout layoutRow, final FormElementPlaceDialog formElement) {
 		
 		tv.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1501,7 +775,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 	}
 	
 	
-	private void setImagePickerMultiple(ImageButton imgView, final int position, final int maxImages, final LinearLayout layoutRow) {
+	@Override
+	public void setImagePickerMultiple(ImageButton imgView, final int position, final int maxImages, final LinearLayout layoutRow) {
 		imgView.setFocusableInTouchMode(false);
 		imgView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1512,7 +787,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setImagePicker(ImageView imgView, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setImagePicker(ImageView imgView, final int position, final LinearLayout layoutRow) {
 		imgView.setFocusableInTouchMode(false);
 		layoutRow.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1523,7 +799,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setImageProfilePicker(CircleImageView imgView, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setImageProfilePicker(CircleImageView imgView, final int position, final LinearLayout layoutRow) {
 		imgView.setFocusableInTouchMode(false);
 		imgView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1534,7 +811,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setAttachPicker(TextView tv, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setAttachPicker(TextView tv, final int position, final LinearLayout layoutRow) {
 		tv.setFocusableInTouchMode(false);
 		layoutRow.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1723,7 +1001,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		return RxTokenPicker.getInstance().start(mContext, TokensPicker.create((Activity) mContext), objectTokens);
 	}
 	
-	private void setEditTextFocusEnabled(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setEditTextFocusEnabled(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
 		editText.setFocusableInTouchMode(true);
 		editText.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1744,7 +1023,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setEditTextInputLayoutFocusEnabled(final EditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setEditTextInputLayoutFocusEnabled(final EditText editText, final int position, final LinearLayout layoutRow) {
 		editText.setFocusableInTouchMode(true);
 		editText.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1765,7 +1045,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setDatePicker(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setDatePicker(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
 		editText.setFocusableInTouchMode(false);
 		
 		editText.setOnClickListener(new View.OnClickListener() {
@@ -1799,7 +1080,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setDatePickerInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setDatePickerInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
 		editText.setFocusableInTouchMode(false);
 		
 		editText.setOnClickListener(new View.OnClickListener() {
@@ -1833,7 +1115,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setDatePickerTextView(final TextView textView, final int position, final LinearLayout layoutRow, final Date minDate, final Date maxDate) {
+	@Override
+	public void setDatePickerTextView(final TextView textView, final int position, final LinearLayout layoutRow, final Date minDate, final Date maxDate) {
 		
 		textView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -1884,7 +1167,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setTimePicker(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setTimePicker(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
 		
 		editText.setFocusableInTouchMode(false);
 		
@@ -1920,7 +1204,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setTimePickerInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setTimePickerInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
 		
 		editText.setFocusableInTouchMode(false);
 		
@@ -1956,7 +1241,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setSearchableSpinnerView(final AppCompatTextView textView, final int position, final LinearLayout layoutRow, final FormElementSearchableSpinner formElementSearchableSpinner) {
+	@Override
+	public void setSearchableSpinnerView(final AppCompatTextView textView, final int position, final LinearLayout layoutRow, final FormElementSearchableSpinner formElementSearchableSpinner) {
 		
 		final SearchableSpinnerCallBack ratingCallBack = formElementSearchableSpinner.getCallback();
 		
@@ -1990,8 +1276,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 	}
 	
 	
-	//
-	private void setDateTimePickerTextView(final TextView textView, final int position, final LinearLayout layoutRow, final FormElementDateTime formElementDateTime) {
+	@Override
+	public void setDateTimePickerTextView(final TextView textView, final int position, final LinearLayout layoutRow, final FormElementDateTime formElementDateTime) {
 		final SwitchDateTimeDialogFragment dateTimeFragment;
 		dateTimeFragment = SwitchDateTimeDialogFragment.newInstance(
 				"Impostazione Data e Ora",
@@ -2066,7 +1352,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setTimePickerTextView(final TextView textView, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setTimePickerTextView(final TextView textView, final int position, final LinearLayout layoutRow) {
 		
 		textView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -2112,7 +1399,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setSingleOptionsDialog(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setSingleOptionsDialog(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
 		
 		// get the element
 		final FormElement currentObj = (FormElement) mDataset.get(position);
@@ -2147,7 +1435,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setSingleOptionsDialogInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setSingleOptionsDialogInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
 		
 		// get the element
 		final FormElementInputLayout currentObj = (FormElementInputLayout) mDataset.get(position);
@@ -2182,7 +1471,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		
 	}
 	
-	private void setMultipleOptionsDialog(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setMultipleOptionsDialog(final AppCompatEditText editText, final int position, final LinearLayout layoutRow) {
 		
 		// get the element
 		final FormElement currentObj = (FormElement) mDataset.get(position);
@@ -2262,7 +1552,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	private void setMultipleOptionsDialogInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
+	@Override
+	public void setMultipleOptionsDialogInputLayout(final EditText editText, final int position, final LinearLayout layoutRow) {
 		
 		// get the element
 		final FormElementInputLayout currentObj = (FormElementInputLayout) mDataset.get(position);
@@ -2342,29 +1633,9 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		});
 	}
 	
-	
-	public class FormCustomEditTextInputLayoutListener implements TextWatcher {
-		private int position;
-		
-		public void updatePosition(int position) {
-			this.position = position;
-		}
-		
-		@Override
-		public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-			// no op
-		}
-		
-		@Override
-		public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-			FormElementInputLayout formElement = (FormElementInputLayout) mDataset.get(position);
-			formElement.setValue(charSequence.toString());
-		}
-		
-		@Override
-		public void afterTextChanged(Editable editable) {
-			// no op
-		}
+	@Override
+	public List<FormObject> getDataSet() {
+		return mDataset;
 	}
 	
 	public class FormCustomEditTextListener implements TextWatcher {
@@ -2382,31 +1653,6 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder> {
 		@Override
 		public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 			FormElement formElement = (FormElement) mDataset.get(position);
-			formElement.setValue(charSequence.toString());
-		}
-		
-		@Override
-		public void afterTextChanged(Editable editable) {
-			// no op
-		}
-	}
-	
-	
-	public class FormCustomEditMemoTextListener implements TextWatcher {
-		private int position;
-		
-		public void updatePosition(int position) {
-			this.position = position;
-		}
-		
-		@Override
-		public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-			// no op
-		}
-		
-		@Override
-		public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-			FormElementMemo formElement = (FormElementMemo) mDataset.get(position);
 			formElement.setValue(charSequence.toString());
 		}
 		

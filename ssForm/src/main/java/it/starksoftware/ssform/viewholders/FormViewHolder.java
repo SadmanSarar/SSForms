@@ -3,7 +3,9 @@ package it.starksoftware.ssform.viewholders;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,6 +23,8 @@ import com.hsalf.smilerating.SmileRating;
 import it.starksoftware.ssform.DateSwitcher.DateSwitcher;
 import it.starksoftware.ssform.R;
 import it.starksoftware.ssform.adapter.FormAdapter;
+import it.starksoftware.ssform.listeners.FormCustomEditMemoTextListener;
+import it.starksoftware.ssform.listeners.FormCustomEditTextInputLayoutListener;
 import it.starksoftware.ssform.ratings.BaseRatingBar;
 import it.starksoftware.ssform.segmented.SegmentedGroup;
 
@@ -29,36 +33,36 @@ import it.starksoftware.ssform.segmented.SegmentedGroup;
  */
 public class FormViewHolder extends RecyclerView.ViewHolder {
 	
-	public LinearLayout                                      layoutRow;
-	public LinearLayout                                      linearLayout;
-	public AppCompatTextView                                 mTextViewTitle;
-	public Button                                            mButtonTitle;
+	public LinearLayout                           layoutRow;
+	public LinearLayout                           linearLayout;
+	public AppCompatTextView                      mTextViewTitle;
+	public Button                                 mButtonTitle;
 	public AppCompatTextView                                 mTextViewDetail;
 	public AppCompatTextView                                 mTextViewOptions;
 	public AppCompatEditText                                 mEditTextValue;
 	public AppCompatEditText                                 mEditMemoTextValue;
 	public TextView                                          mTextViewValue;
 	public Switch                                            mEditSwitchValue;
-	public CheckBox                                          mEditCheckBoxValue;
-	public ImageView                                         mEditImageViewValue;
-	public TextView                                          mTextViewAttachValue;
-	public BaseRatingBar                                     mEditRatingValue;
-	public Spinner                                           mEditSpinnerValue;
-	public SegmentedGroup                                    mEditSegmentGroupValue;
-	public FormAdapter.FormCustomEditTextListener            mFormCustomEditTextListener;
-	public FormAdapter.FormCustomEditTextInputLayoutListener mFormCustomEditTextInputLayoutListener;
-	public FormAdapter.FormCustomEditMemoTextListener        mFormCustomEditMemoTextListener;
-	public RecyclerView                                      mEditImageViewMultipleValue;
-	public ImageButton                                       btnAdd;
-	public FlexboxLayout                                     tokens;
-	public ImageButton                                       btnAddTokens;
-	public DateSwitcher                                      dateSwitcher;
-	public EditText                                          editText;
+	public CheckBox                               mEditCheckBoxValue;
+	public ImageView                              mEditImageViewValue;
+	public TextView                               mTextViewAttachValue;
+	public BaseRatingBar                          mEditRatingValue;
+	public Spinner                                mEditSpinnerValue;
+	public SegmentedGroup                         mEditSegmentGroupValue;
+	public FormAdapter.FormCustomEditTextListener mFormCustomEditTextListener;
+	public FormCustomEditTextInputLayoutListener  mFormCustomEditTextInputLayoutListener;
+	public FormCustomEditMemoTextListener         mFormCustomEditMemoTextListener;
+	public RecyclerView                           mEditImageViewMultipleValue;
+	public ImageButton                            btnAdd;
+	public FlexboxLayout                          tokens;
+	public ImageButton                            btnAddTokens;
+	public DateSwitcher                           dateSwitcher;
+	public EditText                               editText;
 	public CircleImageView                                   circleImageView;
 	public AppCompatTextView                                 formElementProfileName;
 	public SmileRating                                       mSmileValue;
 	
-	public FormViewHolder(View v, FormAdapter.FormCustomEditTextListener listener, FormAdapter.FormCustomEditTextInputLayoutListener listenerInputLayout, int viewType, FormAdapter.FormCustomEditMemoTextListener memoTextListener) {
+	public FormViewHolder(View v, FormAdapter.FormCustomEditTextListener listener, FormCustomEditTextInputLayoutListener listenerInputLayout, int viewType, FormCustomEditMemoTextListener memoTextListener) {
 		super(v);
 		mTextViewTitle = (AppCompatTextView) v.findViewById(R.id.formElementTitle);
 		mTextViewOptions = (AppCompatTextView) v.findViewById(R.id.formElementTitle);
@@ -122,6 +126,22 @@ public class FormViewHolder extends RecyclerView.ViewHolder {
 			
 		}
 		
+	}
+	
+	
+	
+	void primaryBind(){
+		if (mFormCustomEditTextListener != null) {
+			mFormCustomEditTextListener.updatePosition(getAdapterPosition());
+		}
+		
+		if (mFormCustomEditTextInputLayoutListener != null) {
+			mFormCustomEditTextInputLayoutListener.updatePosition(getAdapterPosition());
+		}
+		
+		if (mFormCustomEditMemoTextListener != null) {
+			mFormCustomEditMemoTextListener.updatePosition(getAdapterPosition());
+		}
 	}
 	
 }
