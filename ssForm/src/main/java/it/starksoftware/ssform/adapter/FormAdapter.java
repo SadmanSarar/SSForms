@@ -414,130 +414,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder>
 	}
 	
 	public int getPositionByTag(int tag) {
-		
-		int itemPosition = -1;
-		
-		for (int index = 0, count = this.mDataset.size(); index < count; ++index) {
-			if (mDataset.get(index).getElementType().contentEquals("Header")) {
-				FormHeader element = (FormHeader) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Switch")) {
-				FormElementSwitch element = (FormElementSwitch) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("ImageView")) {
-				FormElementImageView element = (FormElementImageView) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Spinner")) {
-				FormElementSpinner element = (FormElementSpinner) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Memo")) {
-				FormElementMemo element = (FormElementMemo) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Divider")) {
-				FormDivider element = (FormDivider) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Segment")) {
-				FormElementSegment element = (FormElementSegment) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Attach")) {
-				FormElementAttach element = (FormElementAttach) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Signature")) {
-				FormElementSignature element = (FormElementSignature) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Rating")) {
-				FormElementRating element = (FormElementRating) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Basic")) {
-				FormElement element = (FormElement) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("ImageViewMultiple")) {
-				FormElementImageMultipleView element = (FormElementImageMultipleView) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("CustomKeyboard")) {
-				FormElementCustomKeyboard element = (FormElementCustomKeyboard) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("DateTime")) {
-				FormElementDateTime element = (FormElementDateTime) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("SearchableSpinner")) {
-				FormElementSearchableSpinner element = (FormElementSearchableSpinner) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Button")) {
-				FormElementButton element = (FormElementButton) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("CheckBox")) {
-				FormElementCheckBox element = (FormElementCheckBox) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("PlaceDialog")) {
-				FormElementPlaceDialog element = (FormElementPlaceDialog) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("Token")) {
-				FormElementToken element = (FormElementToken) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("DateSwitcher")) {
-				FormElementDateSwitcher element = (FormElementDateSwitcher) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("InputLayout")) {
-				FormElementInputLayout element = (FormElementInputLayout) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("ProfileView")) {
-				FormElementProfileView element = (FormElementProfileView) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			} else if (mDataset.get(index).getElementType().contentEquals("SmileRating")) {
-				FormElementSmileRating element = (FormElementSmileRating) mDataset.get(index);
-				if (element.getTag() == tag) {
-					itemPosition = index;
-				}
-			}
-		}//
-		Log.d("FM", "Position --> " + itemPosition);
-		Log.d("FM", "Tag --> " + tag);
-		return itemPosition;
+		return mFormTypeManager.getPositionByTag(mDataset, tag);
 	}
 	
 	public FormElementAttach getAttachValueAtTag(int tag) {
@@ -726,7 +603,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder>
 	@Override
 	public void setPlaceDialogPicker(final TextView tv, final int position, final LinearLayout layoutRow, final FormElementPlaceDialog formElement) {
 		
-		tv.setOnClickListener(new View.OnClickListener() {
+		View.OnClickListener click = new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				clickedPosition = position;
@@ -747,30 +624,9 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder>
 				placeSearchDialog.show();
 				
 			}
-		});
-		
-		layoutRow.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				clickedPosition = position;
-				PlaceSearchDialog placeSearchDialog = new PlaceSearchDialog.Builder(formElement.getmCtx())
-						.setHintText(formElement.getDialogTitle())
-						.setNegativeText("CANCEL")
-						.setNegativeTextColor(R.color.gray)
-						.setPositiveText("SUBMIT")
-						.setPositiveTextColor(R.color.red)
-						.setLocationNameListener(new PlaceSearchDialog.LocationNameListener() {
-							@Override
-							public void locationName(String locationName) {
-								((FormElementPlaceDialog) mDataset.get(clickedPosition)).setValue(locationName);
-								tv.setText(locationName);
-							}
-						})
-						.build();
-				placeSearchDialog.show();
-				
-			}
-		});
+		};
+		tv.setOnClickListener(click);
+		layoutRow.setOnClickListener(click);
 		
 	}
 	
