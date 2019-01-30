@@ -12,8 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -500,8 +498,9 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder>
 			((FormDividerViewHolder) holder).bind(formHeader);
 		} else if (getItemViewType(position) == FormTypeManager.IS_DEFAULT_VIEW) {
 			FormElement formElement = (FormElement) currentObject;
-			((FormDefaultViewHolder) holder).bind(formElement);
-			
+			if (formElement != null) {
+				((FormDefaultViewHolder) holder).bind(formElement);
+			}
 		} else if (getItemViewType(position) == FormTypeManager.IS_INPUT_LAYOUT) {
 			FormElementInputLayout formElement = (FormElementInputLayout) currentObject;
 			((FormInputLayoutViewHolder) holder).bind(formElement);
@@ -1492,30 +1491,6 @@ public class FormAdapter extends RecyclerView.Adapter<FormViewHolder>
 	@Override
 	public List<FormObject> getDataSet() {
 		return mDataset;
-	}
-	
-	public class FormCustomEditTextListener implements TextWatcher {
-		private int position;
-		
-		public void updatePosition(int position) {
-			this.position = position;
-		}
-		
-		@Override
-		public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-			// no op
-		}
-		
-		@Override
-		public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-			FormElement formElement = (FormElement) mDataset.get(position);
-			formElement.setValue(charSequence.toString());
-		}
-		
-		@Override
-		public void afterTextChanged(Editable editable) {
-			// no op
-		}
 	}
 	
 	

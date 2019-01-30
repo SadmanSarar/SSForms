@@ -17,6 +17,7 @@ public class FormMemoViewHolder extends FormViewHolder {
 	
 	public FormMemoViewHolder(View itemView, FormCustomEditMemoTextListener listener) {
 		super(itemView, null, null, FormTypeManager.IS_MEMO_VIEW, listener);
+		mEditMemoTextValue = itemView.findViewById(R.id.formMemoElementValue);
 	}
 	
 	public void bind(FormElementMemo formElement) {
@@ -39,7 +40,7 @@ public class FormMemoViewHolder extends FormViewHolder {
 	
 	public static FormMemoViewHolder createViewHolder(ViewGroup parent, FormCustomEditMemoTextListener listener) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-		View           view     = inflater.inflate(R.layout.form_element_spinner, parent, false);
+		View           view     = inflater.inflate(R.layout.form_element_memo, parent, false);
 		
 		return new FormMemoViewHolder(view, listener);
 		

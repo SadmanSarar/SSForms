@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import it.starksoftware.ssform.R;
-import it.starksoftware.ssform.adapter.FormAdapter;
+import it.starksoftware.ssform.listeners.FormCustomEditTextListener;
 import it.starksoftware.ssform.model.FormElement;
-import it.starksoftware.ssform.model.FormElementAttach;
 
 /**
  * Created by Sadman Sarar on 1/27/19.
@@ -23,22 +21,25 @@ public class FormDefaultViewHolder extends FormViewHolder {
 	
 	private Callback mCallback;
 	
-	public FormDefaultViewHolder(View itemView, Callback callback) {
-		super(itemView, null,null, FormTypeManager.IS_DEFAULT_VIEW, null);
+	public FormDefaultViewHolder(View itemView, Callback callback, FormCustomEditTextListener listener) {
+		super(itemView, listener, null, FormTypeManager.IS_DEFAULT_VIEW, null);
 		mCallback = callback;
 	}
 	
 	public void bind(final FormElement formElement) {
+		primaryBind();
 		mTextViewTitle.setText(formElement.getTitle());
-		mEditTextValue.setText(formElement.getValue());
+		if (mEditTextValue != null) {
+			mEditTextValue.setText(formElement.getValue() != null ? formElement.getValue() : "");
+			if (formElement.getValueTextStyle() != null) {
+				formElement.getValueTextStyle().format(mEditTextValue);
+			}
+		}
 		
 		if (formElement.getTitleTextStyle() != null) {
 			formElement.getTitleTextStyle().format(mTextViewTitle);
 		}
 		
-		if (formElement.getValueTextStyle() != null) {
-			formElement.getValueTextStyle().format(mEditTextValue);
-		}
 		
 		if (formElement.getContainerStyle() != null) {
 			formElement.getContainerStyle().format(itemView);
@@ -108,19 +109,23 @@ public class FormDefaultViewHolder extends FormViewHolder {
 		}
 	}
 	
-	public interface Callback{
+	public interface Callback {
 		void setEditTextFocusEnabled(final AppCompatEditText editText, final int position, final LinearLayout layoutRow);
+		
 		void setDatePicker(final AppCompatEditText editText, final int position, final LinearLayout layoutRow);
+		
 		void setTimePicker(final AppCompatEditText editText, final int position, final LinearLayout layoutRow);
+		
 		void setSingleOptionsDialog(final AppCompatEditText editText, final int position, final LinearLayout layoutRow);
+		
 		void setMultipleOptionsDialog(final AppCompatEditText editText, final int position, final LinearLayout layoutRow);
 	}
 	
-	public static FormDefaultViewHolder createViewHolder(ViewGroup parent, Callback callback) {
+	public static FormDefaultViewHolder createViewHolder(ViewGroup parent, Callback callback, FormCustomEditTextListener listener) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 		View           view     = inflater.inflate(R.layout.form_element, parent, false);
 		
-		return new FormDefaultViewHolder(view, callback);
+		return new FormDefaultViewHolder(view, callback, listener);
 		
 	}
 	

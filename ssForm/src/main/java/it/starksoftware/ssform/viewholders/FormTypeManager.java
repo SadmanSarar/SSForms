@@ -11,6 +11,7 @@ import it.starksoftware.ssform.R;
 import it.starksoftware.ssform.adapter.FormAdapter;
 import it.starksoftware.ssform.listeners.FormCustomEditMemoTextListener;
 import it.starksoftware.ssform.listeners.FormCustomEditTextInputLayoutListener;
+import it.starksoftware.ssform.listeners.FormCustomEditTextListener;
 import it.starksoftware.ssform.model.FormDivider;
 import it.starksoftware.ssform.model.FormElement;
 import it.starksoftware.ssform.model.FormElementAttach;
@@ -161,7 +162,7 @@ public class FormTypeManager {
 			case IS_SMILE_RATING:
 				return FormSmileRatingViewHolder.createViewHolder(parent);
 			case IS_DEFAULT_VIEW:
-				return FormDefaultViewHolder.createViewHolder(parent, adapter);
+				return FormDefaultViewHolder.createViewHolder(parent, adapter, new FormCustomEditTextListener(adapter));
 			default:
 				LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 				View v;
